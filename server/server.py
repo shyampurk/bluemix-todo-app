@@ -731,7 +731,6 @@ def doLogout_handler(details,channel):
 			update_op = dBop_update(update_tableName,columnName,conditionColumnName,conditionColumnValue,updatevalue_logout)
 			response_code = 0
 			response_message = "Successfully Logged out"
-			publish_handler(channel,response_code,response_message,details,result)
 			dBop_update(update_tableName,columnName_timeupdate,conditionColumnName,conditionColumnValue,updatevalue)
 		
 		except Exception as error_logout:
