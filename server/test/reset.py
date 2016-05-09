@@ -29,8 +29,9 @@ def reset_Prog():
 		i = 2
 		print 'you have selected the client %s'%(login[i])
 	elif (select == 3):
-		print 'you have selected the client %s'%(login[i])
 		i = 3
+		print 'you have selected the client %s'%(login[i])
+		
 	else:
 		print 'wrong selection'
 		pass
