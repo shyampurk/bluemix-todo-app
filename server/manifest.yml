@@ -1,0 +1,13 @@
+---
+# this manifest deploys one application
+applications:
+- name: ToDoApp
+  memory: 64M
+  instances: 1
+  timeout: 180
+  no-route: true
+  no-start: true
+services:
+# My dashDB service Name
+- bluemixtodoapp
+ 
