@@ -430,6 +430,7 @@ def getTaskDetails_handler(details,channel,task_id,start_index):
 	update_tableName = "DASH6139.USERTABLE"
 	
 	wherefetch_tableName = 'DASH6139.COMMENTTABLE'
+	start_index = int(start_index) - 1
 	end_index = int(start_index)+50
 	
 	Task_details = {}
