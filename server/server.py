@@ -300,7 +300,7 @@ def getAddressBook_handler(details,channel):
 			
 		else:
 			response_message = "Already logged in"	
-		publish_handler(channel,response_code,response_message,details,Task_list)
+		publish_handler(channel,response_code,response_message,details,Address_book)
 		logging.info("EXITED GETADDRESSBOOK_HANDLER FOR %s AT TIME %s",str(details['DISPLAY_NAME']),str(datetime.datetime.utcnow()))
 				
 		
