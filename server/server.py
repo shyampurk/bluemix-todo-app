@@ -378,7 +378,7 @@ def getTaskList_handler(details,channel):
 	
 			try:
 				for j in range(len(userid_list)):
-					tableName = ""+DatabaseSchema+"USERTABLE"
+					
 					select1 = 'DISPLAY_NAME'
 					select2 = ''
 					conditionColumnName_task = 'USER_ID' 
@@ -492,7 +492,7 @@ def getTaskDetails_handler(details,channel,task_id,start_index):
 			
 			try:
 				for j in range(len(userid_list)):
-					update_tableName = ""+DatabaseSchema+"USERTABLE"
+					
 					select1 = 'DISPLAY_NAME'
 					select2 = ''
 					conditionColumnName_task = 'USER_ID' 
