@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a Task"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:id="@+id/txtvwTaskTitle"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Created on: DD-MM-YYYY"
+        android:textSize="14dp"
+        android:id="@+id/txtvwTaskCreatedOn"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is some task description"
+        android:textSize="16dp"
+        android:id="@+id/txtvwTaskDescription"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is some task description"
+        android:textSize="16dp"
+        android:id="@+id/txtvwTaskCreatedBy"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is some task description"
+        android:textSize="16dp"
+        android:id="@+id/txtvwTaskLastUpdatedOn"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is some task description"
+        android:textSize="16dp"
+        android:id="@+id/txtvwTaskId"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is some task description"
+        android:textSize="16dp"
+        android:id="@+id/txtvwTaskCommentCount"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is some task description"
+        android:textSize="16dp"
+        android:id="@+id/txtvwTaskStatus"/>
+
+</LinearLayout>

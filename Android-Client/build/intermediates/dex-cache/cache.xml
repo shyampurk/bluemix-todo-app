@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Volumes/E/android_studio_workspace/ToDoBluemix/todobluemix/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/libs/internal_impl-23.1.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
+        <dex dex="/Volumes/E/android_studio_workspace/ToDoBluemix/todobluemix/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.0-620a4b6e7a7caef54c6a21baea900e0fc426b0cd.jar" />
+    </item>
+    <item
+        jar="/Users/manishautomatic/.gradle/caches/modules-2/files-2.1/com.pubnub/pubnub-android/3.7.7/766c33f3174a9b197aec08a914881d7e46e5f393/pubnub-android-3.7.7.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="766c33f3174a9b197aec08a914881d7e46e5f393">
+        <dex dex="/Volumes/E/android_studio_workspace/ToDoBluemix/todobluemix/app/build/intermediates/pre-dexed/debug/pubnub-android-3.7.7-7bb26f4d6bc7b834303cf27f6cf6dab02177bcfe.jar" />
+    </item>
+    <item
+        jar="/Volumes/D/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/23.1.0/support-annotations-23.1.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
+        <dex dex="/Volumes/E/android_studio_workspace/ToDoBluemix/todobluemix/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.0-e605572719cb777461cdd418da52723701c32361.jar" />
+    </item>
+    <item
+        jar="/Volumes/E/android_studio_workspace/ToDoBluemix/todobluemix/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
+        <dex dex="/Volumes/E/android_studio_workspace/ToDoBluemix/todobluemix/app/build/intermediates/pre-dexed/debug/classes-ea9780ecddaea8e73043c61c811d4dbef0c9b511.jar" />
+    </item>
+    <item
+        jar="/Users/manishautomatic/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="/Volumes/E/android_studio_workspace/ToDoBluemix/todobluemix/app/build/intermediates/pre-dexed/debug/gson-2.3-a298171b23f35402b84527df825bef78b3d50236.jar" />
+    </item>
+    <item
+        jar="/Volumes/E/android_studio_workspace/ToDoBluemix/todobluemix/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
+        <dex dex="/Volumes/E/android_studio_workspace/ToDoBluemix/todobluemix/app/build/intermediates/pre-dexed/debug/classes-8c55f77b6af658b6a4248dfeaa1e59ad6be1eb9a.jar" />
+    </item>
+
+</items>
