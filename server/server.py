@@ -694,9 +694,16 @@ def addComment_handler(details,channel,task_id,comment):
 				response_message = "Comment Added Successfully"
 				dBop_update(update_tableName,columnName,conditionColumnName,conditionColumnValue,updatevalue)
 				logging.debug("Performed dBop_update operation for client %s for the Task %s"%(details['DISPLAY_NAME'],channel))
-			
+				
+				# comment result
+				result.update({"TaskId":task_id,"comment":{"USER_ID":details['USER_ID'],"DISPLAY_NAME":details['DISPLAY_NAME'],"commentText":comment,"postedAt":str(updatevalue_task)}})
+
+				
+				
 		except Exception as error_addcomment:
 			response_code = 1
+			result = {"comment":{}}
+			
 			response_message = "DataBase Internal Error"
 			logging.error("The error_addcomment Exception is %s,%s -->CLIENT %s"%(error_addcomment,type(addComment),details['DISPLAY_NAME']))
 		
@@ -706,6 +713,8 @@ def addComment_handler(details,channel,task_id,comment):
 				
 	else:
 		response_code = 1
+		result = {"comment":{}}
+			
 		if (session_expiry == True):
 			response_message = "session Expired"		
 		else:
