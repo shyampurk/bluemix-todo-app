@@ -629,7 +629,7 @@ def addComment_handler(details,channel,task_id,comment):
 	conditionColumnName = 'USER_ID'
 	conditionColumnValue = details['USER_ID']
 	updatevalue = dateofcreate
-	result = 0
+	result = {}
 	
 	
 	session_expiry = sessionexpirecheck_handler(details,channel)
