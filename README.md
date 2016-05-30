@@ -59,7 +59,7 @@ User can also add a comment to a task.
 
 <img src="/screenshots/flow-5.png" align="center" width="250" >
 
-Finally the user can log out of the app by tapping on the "Logout" button
+Finally the user can log out of the app by tapping on the "LOGOUT" button under Dashboard
 
 <img src="/screenshots/flow-6.png" align="center" width="250" >
 
