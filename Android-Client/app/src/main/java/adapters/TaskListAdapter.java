@@ -1,6 +1,7 @@
 package adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +71,15 @@ public class TaskListAdapter extends BaseAdapter {
         holder.mTxtVwTaskCreatedBy.setText("Created by: "+tasksData[i].getDISPLAY_NAME());
         holder.mTxtVwTaskUpdatedOn.setText("Last updated on: "+tasksData[i].getLAST_UPDATED());
         holder.mTxtVwCommentCount.setText("Comments: "+tasksData[i].getNO_OF_COMMENTS());
-        holder.mTxtVwTaskStatus.setText("Status: "+tasksData[i].getTASK_STATUS());
+
+        if(tasksData[i].getTASK_STATUS().equalsIgnoreCase("0")){
+            holder.mTxtVwTaskStatus.setTextColor(Color.GREEN);
+            holder.mTxtVwTaskStatus.setText("Status: Open ");
+        }else{
+            holder.mTxtVwTaskStatus.setText("Status: Closed ");
+            holder.mTxtVwTaskStatus.setTextColor(Color.RED);
+        }
+
         holder.mTxtVwTaskId.setText("Task ID: "+tasksData[i].getTASK_ID());
         return view;
     }
