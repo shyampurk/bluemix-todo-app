@@ -209,7 +209,7 @@ def sessionexpirecheck_handler(details,channel):
 	
 	lastactivitytime = sessionexpire_check['LAST_ACTIVITY_TIME']
 	lastactivitytime = datetime.datetime.strptime(lastactivitytime, "%Y-%m-%d %H:%M:%S.%f")
-	presenttime = datetime.datetime.utcnow()
+	presenttime = datetime.datetime.utcnow().replace(microsecond=0)
 	diff = presenttime-lastactivitytime
 	diff_minutes = (diff.days * 24 * 60) + (diff.seconds/60)
 	
@@ -288,7 +288,7 @@ def getAddressBook_handler(details,channel):
 	columnName = 'LAST_ACTIVITY_TIME'
 	conditionColumnName = 'USER_ID'
 	conditionColumnValue = details['USER_ID']
-	updatevalue = datetime.datetime.utcnow()
+	updatevalue = datetime.datetime.utcnow().replace(microsecond=0)
 	select = '*'
 
 	session_expiry = sessionexpirecheck_handler(details,channel)
@@ -355,7 +355,7 @@ def getTaskList_handler(details,channel):
 	columnName = 'LAST_ACTIVITY_TIME'
 	conditionColumnName = 'USER_ID'
 	conditionColumnValue = details['USER_ID']
-	updatevalue = datetime.datetime.utcnow()
+	updatevalue = datetime.datetime.utcnow().replace(microsecond=0)
 	select = '*'
 
 	Task_list = []
@@ -431,7 +431,7 @@ def getTaskDetails_handler(details,channel,task_id,start_index):
 	logging.info("ENTERED GETTASKDETAILS_HANDLER FOR %s"%(str(details['DISPLAY_NAME'])))
 		
 	tableName = ""+DatabaseSchema+".TASKTABLE"
-	dateofcreate = datetime.datetime.utcnow()
+	dateofcreate = datetime.datetime.utcnow().replace(microsecond=0)
 	columnName = 'LAST_ACTIVITY_TIME'
 	conditionColumnName = 'USER_ID'
 	conditionColumnValue = details['USER_ID']
@@ -529,7 +529,7 @@ def getTaskDetails_handler(details,channel,task_id,start_index):
 
 			Task_details = []
 			response_message = 'DataBase Internal Error'
-			logging.error("The error_taskdetails Exception is %s,%s -->CLIENT %s"%(error_taskdetails,type(taskdetails),details['DISPLAY_NAME'],str(datetime.datetime.utcnow())))
+			logging.error("The error_taskdetails Exception is %s,%s -->CLIENT %s"%(error_taskdetails,type(taskdetails),details['DISPLAY_NAME']))
 		
 		
 		
@@ -562,7 +562,7 @@ def addNewTask_handler(details,channel,task_name,task_desc):
 	logging.info("ENTERED ADDNEWTASK_HANDLER FOR %s"%(str(details['DISPLAY_NAME'])))
 	
 	status = 0
-	dateofcreate = datetime.datetime.utcnow()
+	dateofcreate = datetime.datetime.utcnow().replace(microsecond=0)
 	lastupdate = dateofcreate
 	noofcomment = 0
 	tableName = ""+DatabaseSchema+".TASKTABLE"
@@ -622,7 +622,7 @@ Parameters 		:   details  - Distionary contains Name of the user,userid,email,pa
 def addComment_handler(details,channel,task_id,comment):
 	logging.info("ENTERED ADDCOMMENT_HANDLER FOR %s"%(str(details['DISPLAY_NAME'])))
 		
-	dateofcreate = datetime.datetime.utcnow()
+	dateofcreate = datetime.datetime.utcnow().replace(microsecond=0)
 	update_tableName = ""+DatabaseSchema+".USERTABLE"
 	tableName = ""+DatabaseSchema+".TASKTABLE"
 	columnName = 'LAST_ACTIVITY_TIME'
@@ -686,7 +686,7 @@ def addComment_handler(details,channel,task_id,comment):
 				columnName_task = 'LAST_UPDATED'
 				conditionColumnName_task = 'TASK_ID'
 				conditionColumnValue_task = task_id
-				updatevalue_task = datetime.datetime.utcnow()
+				updatevalue_task = datetime.datetime.utcnow().replace(microsecond=0)
 				update_op = dBop_update(tableName,columnName_task,conditionColumnName_task,conditionColumnValue_task,updatevalue_task)
 				logging.debug("Performed dBop_update operation for client %s for the Task %s"%(details['DISPLAY_NAME'],channel))
 					
@@ -694,27 +694,25 @@ def addComment_handler(details,channel,task_id,comment):
 				response_message = "Comment Added Successfully"
 				dBop_update(update_tableName,columnName,conditionColumnName,conditionColumnValue,updatevalue)
 				logging.debug("Performed dBop_update operation for client %s for the Task %s"%(details['DISPLAY_NAME'],channel))
-				
+			
 				# comment result
 				result.update({"TaskId":task_id,"comment":{"USER_ID":details['USER_ID'],"DISPLAY_NAME":details['DISPLAY_NAME'],"commentText":comment,"postedAt":str(updatevalue_task)}})
 
-				
-				
+
+
 		except Exception as error_addcomment:
 			response_code = 1
 			result = {"comment":{}}
-			
 			response_message = "DataBase Internal Error"
 			logging.error("The error_addcomment Exception is %s,%s -->CLIENT %s"%(error_addcomment,type(addComment),details['DISPLAY_NAME']))
 		
 
 		publish_handler(channel,response_code,response_message,details,result)
-		logging.info("EXITED ADDCOMMENT_HANDLER FOR %s AT TIME %s",str(details['DISPLAY_NAME']),str(datetime.datetime.utcnow()))
+		logging.info("EXITED ADDCOMMENT_HANDLER FOR %s ",str(details['DISPLAY_NAME']))
 				
 	else:
 		response_code = 1
 		result = {"comment":{}}
-			
 		if (session_expiry == True):
 			response_message = "session Expired"		
 		else:
@@ -788,7 +786,7 @@ def updateTaskStatus_handler(details,channel,task_id,update_state):
 			columnName = 'LAST_ACTIVITY_TIME'
 			conditionColumnName = 'USER_ID'
 			conditionColumnValue = details['USER_ID']
-			updatevalue = datetime.datetime.utcnow()
+			updatevalue = datetime.datetime.utcnow().replace(microsecond=0)
 			update_op = dBop_update(update_tableName,columnName,conditionColumnName,conditionColumnValue,updatevalue)
 			logging.debug("Performed dBop_update operation for client %s for the Task %s"%(details['DISPLAY_NAME'],channel))
 				
@@ -798,7 +796,7 @@ def updateTaskStatus_handler(details,channel,task_id,update_state):
 			columnName_task = 'LAST_UPDATED'
 			conditionColumnName_task = 'TASK_ID'
 			conditionColumnValue_task = task_id
-			updatevalue_task = datetime.datetime.utcnow()
+			updatevalue_task = datetime.datetime.utcnow().replace(microsecond=0)
 			update_op = dBop_update(tableName,columnName_task,conditionColumnName_task,conditionColumnValue_task,updatevalue_task)
 			logging.debug("Performed dBop_update operation for client %s for the Task %s"%(details['DISPLAY_NAME'],channel))
 			
@@ -864,7 +862,7 @@ def doLogin_handler(login,passd,channel):
 				response_message = "WELCOME %s "%(details['DISPLAY_NAME'])
 					
 				#UPDATING THE USERSTATE AND THE LAST_ACTIVITY_TIME FOR THE CLIENT 
-				date = datetime.datetime.utcnow()
+				date = datetime.datetime.utcnow().replace(microsecond=0)
 				update_state = "UPDATE "+DatabaseSchema+".USERTABLE SET USER_STATE = '1',LAST_ACTIVITY_TIME=\'"+str(date)+"\'  WHERE EMAIL = \'"+login+"\' AND PASSWORD = \'"+passd+"\'"
 				stmt = ibm_db.exec_immediate(connection, update_state)
 				ibm_db.free_stmt(stmt)
@@ -905,7 +903,7 @@ def doLogout_handler(details,channel):
 	conditionColumnValue = details['USER_ID']
 	
 	updatevalue_logout = 0
-	updatevalue = datetime.datetime.utcnow()
+	updatevalue = datetime.datetime.utcnow().replace(microsecond=0)
 
 	# FOR LAST_ACTIVITY_TIME UPDATE
 	columnName_timeupdate = 'LAST_ACTIVITY_TIME'

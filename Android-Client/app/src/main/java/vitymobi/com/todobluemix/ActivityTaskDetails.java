@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -42,6 +43,8 @@ public class ActivityTaskDetails extends AppCompatActivity implements View.OnCli
     private EditText mEdtxtTaskNewComment;
     private Button mBtnAddNewComment;
     private Handler mHanderNewComment;
+    private Handler mHandlerToggleStatus;
+    private Button mBtnToggleStatus;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -73,6 +76,13 @@ public class ActivityTaskDetails extends AppCompatActivity implements View.OnCli
                     progressDialog.dismiss();
                     populateTaskDetails();
                     updateListView();
+                    if(ToDoAppInstance.getInstance().getCURRENT_SELECTED_TASK_DETAILS().getTASK_STATUS().equalsIgnoreCase("0")){
+                        mBtnToggleStatus.setTextColor(Color.rgb(0,100,0));
+                        mBtnToggleStatus.setText("STATUS : OPEN");
+                    }else{
+                        mBtnToggleStatus.setTextColor(Color.RED);
+                        mBtnToggleStatus.setText("STATUS : CLOSE");
+                    }
                 } if(responseMessage.getResponseCode()== ChannelConstants.HANDLER_CODE_ERROR){
                     progressDialog.dismiss();
                     ToDoAppInstance.getInstance().showAlertWithMessage((String) message.obj, ActivityTaskDetails.this);
@@ -139,6 +149,55 @@ public class ActivityTaskDetails extends AppCompatActivity implements View.OnCli
                 }
             }
         };
+
+        mHandlerToggleStatus = new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(Message message) {
+
+
+                HandlerResponseMessage responseMessage = (HandlerResponseMessage) message.obj;
+                if(responseMessage.getResponseCode()== ChannelConstants.HANDLER_CODE_INIT){
+                    progressDialog.show();
+                } if(responseMessage.getResponseCode()== ChannelConstants.HANDLER_CODE_SUCCESS){
+                    progressDialog.dismiss();
+                    mEdtxtTaskNewComment.setText("");
+                    if(ToDoAppInstance.getInstance().getCURRENT_SELECTED_TASK_DETAILS().getTASK_STATUS().equalsIgnoreCase("0")){
+                        ToDoAppInstance.getInstance().getCURRENT_SELECTED_TASK_DETAILS().setTASK_STATUS("1");
+                        mBtnToggleStatus.setTextColor(Color.RED);
+                        mBtnToggleStatus.setText("STATUS : CLOSED");
+                    }else{
+                        ToDoAppInstance.getInstance().getCURRENT_SELECTED_TASK_DETAILS().setTASK_STATUS("0");
+                        mBtnToggleStatus.setTextColor(Color.rgb(0,100,0));
+                        mBtnToggleStatus.setText("STATUS : OPEN");
+                    }
+                    Toast.makeText(ActivityTaskDetails.this,"Status changed successfully",Toast.LENGTH_LONG).show();
+                    updateListView();
+                } if(responseMessage.getResponseCode()== ChannelConstants.HANDLER_CODE_ERROR){
+                    progressDialog.dismiss();
+                    ToDoAppInstance.getInstance().showAlertWithMessage((String) message.obj, ActivityTaskDetails.this);
+                } if(responseMessage.getResponseCode()== ChannelConstants.HANDLER_CODE_FAILURE){
+                    progressDialog.dismiss();
+                    ToDoAppInstance.getInstance().showAlertWithMessage(responseMessage.getResponseMessage(), ActivityTaskDetails.this);
+                }if(responseMessage.getResponseCode()== ChannelConstants.HANDLER_CODE_SESSION_EXPIRED){
+                    progressDialog.dismiss();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityTaskDetails.this);
+                    builder.setMessage("Session Expired, please login again")
+                            .setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Intent intent = new Intent(ActivityTaskDetails.this, ActivityLogin.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent); //do things
+                                    ToDoAppInstance.getInstance().saveInPrefs(ChannelConstants.PREF_KEY_USER_DISPLAY_NAME, "");
+                                    finish();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            }
+        };
     }
 
 
@@ -170,6 +229,23 @@ public class ActivityTaskDetails extends AppCompatActivity implements View.OnCli
                 progressDialog.show();
             }
 
+        }if(view==mBtnToggleStatus){
+            String newStatus="";
+            if(ToDoAppInstance.getInstance().getCURRENT_SELECTED_TASK_DETAILS().getTASK_STATUS().equalsIgnoreCase("0")){
+                newStatus="1";
+            }else{
+                newStatus="0";
+            }
+
+
+
+            new PubNubHelper(ActivityTaskDetails.this)
+                    .updateTaskStatus(
+                            ToDoAppInstance.getInstance().getCURRENT_SELECTED_TASK_ID(),
+                            newStatus,
+                            mHandlerToggleStatus
+                    );
+            progressDialog.show();
         }
     }
 
@@ -191,6 +267,8 @@ public class ActivityTaskDetails extends AppCompatActivity implements View.OnCli
         mBtnAddNewComment=(Button)findViewById(R.id.btnAddComment);
         mEdtxtTaskNewComment=(EditText)findViewById(R.id.edtxtTaskComment);
         mBtnAddNewComment.setOnClickListener(this);
+        mBtnToggleStatus=(Button)findViewById(R.id.btnToggleStatus);
+        mBtnToggleStatus.setOnClickListener(this);
 
 
     }
