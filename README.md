@@ -111,12 +111,7 @@ Once successfully pushed, the server application will be automatically started. 
 
 Follow the standard build procedures for building the APK package for this android App.
 
-Before building , ensure that you select the PubNub keys as follows
-
-    - Set the Publish keys in file _________________ at Line number __
-    - Set the Subscribe keys in file _________________ at Line number __
-
-Ensure that the keys used in the app are same as the ones used in server.
+Before building , ensure that you select the PubNub keys as follows and ensure that the keys used in the app are same as the ones used in server.
 
 
 ## Usage
