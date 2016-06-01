@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 
-import com.mobiprobe.Mobiprobe;
+
 import com.pubnub.api.Pubnub;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class ToDoAppInstance extends Application {
     @Override
     public void onCreate(){
         super.onCreate();
-        Mobiprobe.activate(this,"3a4fe437");
+       // Mobiprobe.activate(this,"3a4fe437");
         instance= this;
         appPrefs = this.getSharedPreferences("APP_PREFS",MODE_PRIVATE);
         initPubNub();

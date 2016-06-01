@@ -24,5 +24,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.pubnub:pubnub-android:3.7.7'
     compile 'com.google.code.gson:gson:2.3'
-    compile files('/Volumes/E/android_studio_workspace/bluemix-todo-app/Android-Client/libs/mobiprobe7.0.jar')
+
 }
