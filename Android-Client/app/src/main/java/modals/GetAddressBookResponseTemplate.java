@@ -1,5 +1,7 @@
 package modals;
 
+import java.util.ArrayList;
+
 /**
  * Created by manishautomatic on 20/05/16.
  */
@@ -40,17 +42,17 @@ public class GetAddressBookResponseTemplate {
         this.details = details;
     }
 
-    public ContactTemplate[] getResult() {
+    public ArrayList<ContactTemplate> getResult() {
         return result;
     }
 
-    public void setResult(ContactTemplate[] result) {
+    public void setResult(ArrayList<ContactTemplate> result) {
         this.result = result;
     }
 
     private String response_message ="";
     private LoginDetailsObject details = new LoginDetailsObject();
-    private ContactTemplate[] result = {};
+    private ArrayList<ContactTemplate> result = new ArrayList<>();
 
 
 

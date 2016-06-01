@@ -12,8 +12,11 @@ import com.pubnub.api.Pubnub;
 import com.pubnub.api.PubnubError;
 import com.pubnub.api.PubnubException;
 
+
 public class MainActivity extends AppCompatActivity {
 
+//this class is scheduled for deletion...
+    /**
     private final String PUBLISH_CHANNEL_KEY="pub-c-c772277c-233e-4414-8644-b253fb6522d8";
     private final String SUBSCRIBE_CHANNEL_KEY="sub-c-af53005e-efea-11e5-ab43-02ee2ddab7fe";
     private final String CHANNEL_NAME= "todochannel";
@@ -160,4 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    **/
 }

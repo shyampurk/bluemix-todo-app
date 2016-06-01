@@ -7,7 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 
+import com.mobiprobe.Mobiprobe;
 import com.pubnub.api.Pubnub;
+
+import java.util.ArrayList;
 
 import modals.CommentTemplate;
 import modals.ContactTemplate;
@@ -26,12 +29,13 @@ public class ToDoAppInstance extends Application {
     private TaskSummaryTemplate[] currentTasks ;
     private String CURRENT_SELECTED_TASK_ID="";
     private TaskDetailsTemplate CURRENT_SELECTED_TASK_DETAILS;
-    private ContactTemplate[] CURRENT_ADDRESS_BOOK={};
+    private ArrayList<ContactTemplate> CURRENT_ADDRESS_BOOK=new ArrayList<>();
 
 
     @Override
     public void onCreate(){
         super.onCreate();
+        Mobiprobe.activate(this,"3a4fe437");
         instance= this;
         appPrefs = this.getSharedPreferences("APP_PREFS",MODE_PRIVATE);
         initPubNub();
@@ -41,12 +45,13 @@ public class ToDoAppInstance extends Application {
         return CURRENT_SELECTED_TASK_DETAILS;
     }
 
-    public ContactTemplate[] getCURRENT_ADDRESS_BOOK() {
+    public ArrayList<ContactTemplate> getCURRENT_ADDRESS_BOOK() {
         return CURRENT_ADDRESS_BOOK;
     }
 
-    public void setCURRENT_ADDRESS_BOOK(ContactTemplate[] CURRENT_ADDRESS_BOOK) {
-        this.CURRENT_ADDRESS_BOOK = CURRENT_ADDRESS_BOOK;
+    public void setCURRENT_ADDRESS_BOOK(ArrayList<ContactTemplate> CURRENT_ADDRESS_BOOK_) {
+        this.CURRENT_ADDRESS_BOOK.clear();
+        this.CURRENT_ADDRESS_BOOK.addAll(CURRENT_ADDRESS_BOOK_);
     }
 
     public void setCURRENT_SELECTED_TASK_DETAILS(TaskDetailsTemplate CURRENT_SELECTED_TASK_DETAILS) {

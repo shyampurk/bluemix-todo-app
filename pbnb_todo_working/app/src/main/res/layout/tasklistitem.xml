@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:padding="5dp"
+    android:background="@color/listblue">
+
+    <TextView
+        android:id="@+id/taskdescrtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/donetaskcheck"
+        android:layout_alignBottom="@+id/donetaskcheck"
+        android:layout_alignLeft="@+id/taskupdatetext"
+        android:text=""
+        style="@style/textviewstyle"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <CheckBox
+        android:id="@+id/donetaskcheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/taskownertext"
+        android:layout_below="@+id/taskownertext"
+        android:enabled="false"
+        android:focusable="false"
+        android:text="Done"/>
+
+    <TextView
+        android:id="@+id/taskupdatetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="16dp"
+        android:text="Text"
+        style="@style/textviewstyle"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/taskownertext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/taskupdatetext"
+        android:layout_alignBottom="@+id/taskupdatetext"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:text="Text"
+        style="@style/textviewstyle"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

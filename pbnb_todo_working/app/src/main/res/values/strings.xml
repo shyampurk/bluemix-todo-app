@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ToDo</string>
+    <string name="ToDoDemo">ToDoDemo</string>
+    <string name="action_settings">Settings</string>
+    <string name="selectname">Select Collaborator Name</string>
+    <string name="submit">Submit</string>
+    <string-array name="collaborators">
+        <item >Peter</item>
+        <item >Sam</item>
+        <item >Eric</item>
+    </string-array>
+
+</resources>

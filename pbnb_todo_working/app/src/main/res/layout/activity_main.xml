@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.todo.MainActivity"
+    android:background="@color/greenblue" >
+
+    <TextView
+        android:id="@+id/selecttextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/textviewstyle"
+        android:layout_below="@+id/tododemotextView"
+        android:layout_marginTop="94dp"
+        android:text="@string/selectname"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/collaboratorspinner"
+        style="@style/spinnerstyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/selecttextView"
+        android:layout_marginTop="45dp"
+        android:entries="@array/collaborators" />
+
+    <TextView
+        android:id="@+id/tododemotextView"
+        style="@style/textviewstyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/selecttextView"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="45dp"
+        android:background="@color/lightblue"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:text="@string/ToDoDemo"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/submitbutton"
+        style="@style/darkbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="62dp"
+        android:text="@string/submit" />
+    
+</RelativeLayout>

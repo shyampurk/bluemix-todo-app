@@ -23,7 +23,8 @@
         <activity android:name=".ActivityTaskList"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".ActivityTaskDetails"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity android:name=".ActivityAddNewTask"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".ActivityAddressBook"

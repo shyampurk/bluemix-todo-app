@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import modals.CommentTemplate;
 import modals.ContactTemplate;
@@ -22,18 +23,20 @@ public class AddressBookAdapter extends BaseAdapter {
 
     private Context parentContext;
     private LayoutInflater mInflater;
-    private ContactTemplate[] contactsList;
+    private ArrayList<ContactTemplate> contactsList= new ArrayList<>();
 
 
-    public AddressBookAdapter(Context parentReference, ContactTemplate[] contacts){
+    public AddressBookAdapter(Context parentReference, ArrayList<ContactTemplate> contacts){
         this.parentContext=parentReference;
         mInflater= LayoutInflater.from(parentReference);
-        this.contactsList=contacts;
+        contactsList.clear();;
+        contactsList=  contacts;
+       // this.contactsList=contacts;
     }
 
     @Override
     public int getCount() {
-        return contactsList.length;
+        return contactsList.size();
     }
 
     @Override
@@ -63,14 +66,14 @@ public class AddressBookAdapter extends BaseAdapter {
             holder =(ViewHolder)view.getTag();
         }
 
-        holder.mTxtVwContactName.setText("Name: "+contactsList[i].getDISPLAY_NAME());
-        holder.mTxtVwContactLastActivity.setText("Last Activity: "+contactsList[i].getLAST_ACTIVITY());
-        holder.mTxtVwContactEmail.setText("Email: "+contactsList[i].getEMAIL());
-        holder.mTxtVwContactUserID.setText("User ID: "+contactsList[i].getUSER_ID());
-        if(contactsList[i].getUSER_STATE().equalsIgnoreCase("1"))
-            holder.mImgVwStatusBeacon.setImageDrawable(parentContext.getResources().getDrawable(R.drawable.red_dot_md));
-        else{
+        holder.mTxtVwContactName.setText("Name: " + contactsList.get(i).getDISPLAY_NAME());
+        holder.mTxtVwContactLastActivity.setText("Last Activity: " + contactsList.get(i).getLAST_ACTIVITY());
+        holder.mTxtVwContactEmail.setText("Email: " + contactsList.get(i).getEMAIL());
+        holder.mTxtVwContactUserID.setText("User ID: " + contactsList.get(i).getUSER_ID());
+        if(contactsList.get(i).getUSER_STATE().equalsIgnoreCase("1"))
             holder.mImgVwStatusBeacon.setImageDrawable(parentContext.getResources().getDrawable(R.drawable.green_dot));
+        else{
+            holder.mImgVwStatusBeacon.setImageDrawable(parentContext.getResources().getDrawable(R.drawable.red_dot_md));
         }
 
 

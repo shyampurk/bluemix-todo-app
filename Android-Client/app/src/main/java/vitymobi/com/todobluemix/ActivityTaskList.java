@@ -2,17 +2,23 @@ package vitymobi.com.todobluemix;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.google.gson.Gson;
 
 import adapters.TaskListAdapter;
 import controller.ChannelConstants;
@@ -32,8 +38,8 @@ public class ActivityTaskList extends AppCompatActivity implements View.OnClickL
     private ListView mLstVwTaskListing;
     private TaskListAdapter mAdapter ;
     TaskListing tListing = new TaskListing();
-    private Handler mHandler;
     private ProgressDialog progressDialog;
+    private Gson gson = new Gson();
 
 
     @Override
@@ -48,9 +54,11 @@ public class ActivityTaskList extends AppCompatActivity implements View.OnClickL
     @Override
     public void onResume(){
         super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(getTaskList,
+                new IntentFilter(ChannelConstants.GET_TASK_LIST));
         initUI();
         initProgressDialog();
-        initHandler();
+
         prepareList();
     }
 
@@ -77,7 +85,7 @@ public class ActivityTaskList extends AppCompatActivity implements View.OnClickL
 
         progressDialog.show();
 
-        new PubNubHelper(ActivityTaskList.this).getTaskList(mHandler);
+        new PubNubHelper(ActivityTaskList.this).getTaskList();
     }
 
 
@@ -92,13 +100,8 @@ public class ActivityTaskList extends AppCompatActivity implements View.OnClickL
 
 
 
-    private void initHandler() {
+    private void handleResponse(HandlerResponseMessage responseMessage) {
 
-        mHandler = new Handler(Looper.getMainLooper()){
-            @Override
-            public void handleMessage(Message message) {
-
-                HandlerResponseMessage responseMessage = (HandlerResponseMessage) message.obj;
 
                 if(responseMessage.getResponseCode()== ChannelConstants.HANDLER_CODE_INIT){
                     progressDialog.show();
@@ -135,8 +138,8 @@ public class ActivityTaskList extends AppCompatActivity implements View.OnClickL
 
 
             }
-        };
-    }
+
+
 
 
 
@@ -155,4 +158,15 @@ public class ActivityTaskList extends AppCompatActivity implements View.OnClickL
             }
         });
     }
+
+
+    private BroadcastReceiver getTaskList = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String dispatch = intent.getStringExtra("message");
+            HandlerResponseMessage message = new HandlerResponseMessage();
+            message = gson.fromJson(dispatch,HandlerResponseMessage.class);
+            handleResponse(message);
+        }
+    };
 }

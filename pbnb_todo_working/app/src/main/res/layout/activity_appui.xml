@@ -1,0 +1,95 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     android:paddingLeft="20dp"
+    android:paddingRight="20dp" 
+    tools:context="com.example.todo.MainActivity"
+    android:background="@color/lightblue" >
+
+    <TextView
+        android:id="@+id/projecttextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="82dp"
+        android:text="Project:"
+        style="@style/textviewstyle"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/todotextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/projecttextView"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/projecttextView"
+        android:text="@string/ToDoDemo"
+        style="@style/textviewstyle"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/collaboratortextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/projecttextView"
+        android:layout_below="@+id/projecttextView"
+        android:layout_marginTop="28dp"
+        android:text="Collaborators:"
+        style="@style/textviewstyle"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/collaboratortextView"
+        android:layout_alignBottom="@+id/collaboratortextView"
+        android:layout_alignRight="@+id/textView5"
+        android:text=""
+        style="@style/textviewstyle"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView5"
+        style="@style/textviewstyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/collaboratortextView"
+        android:layout_alignBottom="@+id/collaboratortextView"
+        android:layout_toRightOf="@+id/collaboratortextView"
+        android:text="Peter, Eric, Sam"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/lastupdatetextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/collaboratortextView"
+        android:layout_below="@+id/collaboratortextView"
+        android:layout_marginTop="32dp"
+        android:text="Last Update:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/updatetimetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lastupdatetextView"
+        android:layout_alignBottom="@+id/lastupdatetextView"
+        android:layout_alignLeft="@+id/textView5"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/taskbutton"
+        style="@style/textviewstyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lastupdatetextView"
+        android:layout_alignRight="@+id/textView5"
+        android:layout_below="@+id/lastupdatetextView"
+        android:layout_marginTop="35dp"
+        android:text="Tasks" />
+    
+</RelativeLayout>

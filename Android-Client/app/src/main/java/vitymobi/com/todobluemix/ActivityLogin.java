@@ -103,8 +103,8 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
         if(view==mBtnLogin){
             // validate credentials
             if(validanteCredentials()){
-                new PubNubHelper(this).performLogin(mEdtxtUsername.getText().toString(),
-                        mEdtxtPassword.getText().toString(),this,mHandler);
+                new PubNubHelper(this).performLogin(mEdtxtUsername.getText().toString().trim(),
+                        mEdtxtPassword.getText().toString().trim(),this,mHandler);
                 //new PubNubHelper(this).performLogout("peter@sitename.com","peter123",this,mHandler);
                 progressDialog.show();
             }
@@ -117,7 +117,7 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
 
 
     private boolean validanteCredentials(){
-        if(!emailValidator(mEdtxtUsername.getText().toString())){
+        if(!emailValidator(mEdtxtUsername.getText().toString().trim())){
             ToDoAppInstance.getInstance().showAlertWithMessage("Please provide valid email",this);
             return false;
         }if(mEdtxtPassword.getText().toString().trim().equalsIgnoreCase("")){

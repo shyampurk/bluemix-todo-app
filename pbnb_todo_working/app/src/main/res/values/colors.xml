@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <color name="greenblue">#99CCFF</color>
+        <color name="lightblue">#FFCCCC</color>
+        <color name="listblue">#CCCCFF</color>
+        <color name="textblue">#000033</color>
+    </resources>

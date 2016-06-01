@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Volumes/D/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Volumes/E/android_studio_workspace/bluemix-todo-app/pbnb_todo_working/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-e5805f9cdd8397976c21877b0d5b72124fe86756.jar" />
+    </item>
+    <item
+        jar="/Volumes/E/android_studio_workspace/bluemix-todo-app/pbnb_todo_working/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Volumes/E/android_studio_workspace/bluemix-todo-app/pbnb_todo_working/app/build/intermediates/pre-dexed/debug/classes-f5716f6039b65bcd78d7950c32f64eeb5a6d1e3a.jar" />
+    </item>
+    <item
+        jar="/Volumes/E/android_studio_workspace/bluemix-todo-app/pbnb_todo_working/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Volumes/E/android_studio_workspace/bluemix-todo-app/pbnb_todo_working/app/build/intermediates/pre-dexed/debug/classes-4df33edaad9172b6c338de8d4858904b5d526f14.jar" />
+    </item>
+    <item
+        jar="/Volumes/E/android_studio_workspace/bluemix-todo-app/pbnb_todo_working/app/libs/bcprov-jdk15on-1.47.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="b6f5d9926b0afbde9f4dbe3db88c5247be7794bb">
+        <dex dex="/Volumes/E/android_studio_workspace/bluemix-todo-app/pbnb_todo_working/app/build/intermediates/pre-dexed/debug/bcprov-jdk15on-1.47-55a36a05a98e00457d9fdcdbb558b465ce56762e.jar" />
+    </item>
+    <item
+        jar="/Volumes/E/android_studio_workspace/bluemix-todo-app/pbnb_todo_working/app/libs/Pubnub-Android-3.7.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d5d5b97abe75706a99fdf42a394e4656174575d">
+        <dex dex="/Volumes/E/android_studio_workspace/bluemix-todo-app/pbnb_todo_working/app/build/intermediates/pre-dexed/debug/Pubnub-Android-3.7.2-df42efd71f3ac08f5eb422a42eb6ca0f17d95a25.jar" />
+    </item>
+    <item
+        jar="/Volumes/E/android_studio_workspace/bluemix-todo-app/pbnb_todo_working/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/jars/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Volumes/E/android_studio_workspace/bluemix-todo-app/pbnb_todo_working/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-6494136308715cd0547b2d56b7af7c822b7af24c.jar" />
+    </item>
+
+</items>
