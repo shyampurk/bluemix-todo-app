@@ -208,7 +208,7 @@ def sessionexpirecheck_handler(details,channel):
 	logging.debug("Performed dBop_WhereFetch operation in sessionexpire check for the client %s"%(details['DISPLAY_NAME']))
 	
 	lastactivitytime = sessionexpire_check['LAST_ACTIVITY_TIME']
-	lastactivitytime = datetime.datetime.strptime(lastactivitytime, "%Y-%m-%d %H:%M:%S.%f")
+	lastactivitytime = datetime.datetime.strptime(lastactivitytime, "%Y-%m-%d %H:%M:%S")
 	presenttime = datetime.datetime.utcnow().replace(microsecond=0)
 	diff = presenttime-lastactivitytime
 	diff_minutes = (diff.days * 24 * 60) + (diff.seconds/60)
@@ -735,7 +735,7 @@ Parameters 		:   details      - Distionary contains Name of the user,userid,emai
 def updateTaskStatus_handler(details,channel,task_id,update_state):
 	logging.info("ENTERED UPDATETASKSTATUS_HANDLER FOR %s"%(str(details['DISPLAY_NAME'])))
 		
-	result = 0
+	result = {"task_id":task_id}
 	tableName = ""+DatabaseSchema+".TASKTABLE"
 	
 	
