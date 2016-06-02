@@ -50,10 +50,10 @@ public class ActivityTaskDetails extends AppCompatActivity implements View.OnCli
     private TextView mTxtVwTaskDescription;
     private EditText mEdtxtTaskNewComment;
     private Button mBtnAddNewComment;
-    private Handler mHanderNewComment;
-    private Handler mHandlerToggleStatus;
+
+
     private Button mBtnToggleStatus;
-    private Runnable rr;
+
     private Context context;
     private ProgressDialog progressDialog;
     private Gson gson = new Gson();
@@ -75,12 +75,7 @@ public class ActivityTaskDetails extends AppCompatActivity implements View.OnCli
         prepareProgressDialog();
         prepareCommentsList();
 
-        rr= new Runnable() {
-            @Override
-            public void run() {
 
-            }
-        };
     }
 
     @Override
@@ -113,6 +108,10 @@ public class ActivityTaskDetails extends AppCompatActivity implements View.OnCli
                 mBtnToggleStatus.setTextColor(Color.rgb(0,100,0));
                 mBtnToggleStatus.setText("STATUS : OPEN");
             }
+
+
+
+
             Toast.makeText(ActivityTaskDetails.this,"Status changed successfully",Toast.LENGTH_LONG).show();
             updateListView();
         } if(responseMessage.getResponseCode()== ChannelConstants.HANDLER_CODE_ERROR){
@@ -278,6 +277,11 @@ public class ActivityTaskDetails extends AppCompatActivity implements View.OnCli
             }else{
                 mBtnToggleStatus.setTextColor(Color.RED);
                 mBtnToggleStatus.setText("STATUS : CLOSE");
+            }
+            if(!ToDoAppInstance.getInstance().getCURRENT_SELECTED_TASK_DETAILS().getDISPLAY_NAME().equalsIgnoreCase(
+                    ToDoAppInstance.getInstance().getPrefValue(ChannelConstants.PREF_KEY_USER_DISPLAY_NAME)
+            )){
+                mBtnToggleStatus.setEnabled(false);
             }
         } if(responseMessage.getResponseCode()== ChannelConstants.HANDLER_CODE_ERROR){
             progressDialog.dismiss();
