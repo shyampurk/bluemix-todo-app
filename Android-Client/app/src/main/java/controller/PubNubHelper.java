@@ -1281,7 +1281,7 @@ public class PubNubHelper {
                                 .getPrefValue(ChannelConstants.PREF_KEY_USER_ID));
                         detailsObject.put("USER_ID", user_id);
 
-                        
+
                         detailsObject.put("DISPLAY_NAME", ToDoAppInstance.getInstance()
                                 .getPrefValue(ChannelConstants.PREF_KEY_USER_DISPLAY_NAME));
                         jObject.put("details", detailsObject);
