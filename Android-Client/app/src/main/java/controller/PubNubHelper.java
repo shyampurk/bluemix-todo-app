@@ -57,7 +57,7 @@ public class PubNubHelper {
 
     public void performLogin(final String email, final String password, final ProgressCallback progressCallback, final Handler handlerInstance) {
         try {
-            initCallbackDoLogin(handlerInstance,email,password);
+            initCallbackDoLogin(handlerInstance, email, password);
             String[] channelsSubscribed = ToDoAppInstance.getInstance().getPubnubInstance().getSubscribedChannelsArray();
             for(String channelName :channelsSubscribed){
                 if(channelName.equalsIgnoreCase(ChannelConstants.LOGIN)){
@@ -101,7 +101,7 @@ public class PubNubHelper {
 
     public void addNewTask(final String taskName, final String taskDescription ) {
         try {
-            initAddTaskCallback( taskName, taskDescription);
+            initAddTaskCallback(taskName, taskDescription);
 
             String[] channelsSubscribed = ToDoAppInstance.getInstance().getPubnubInstance().getSubscribedChannelsArray();
             for(String channelName :channelsSubscribed){
@@ -142,7 +142,7 @@ public class PubNubHelper {
         }
     }
 
-    public  void getTaskList(  ) {
+    public  void getTaskList() {
         try {
             initGetTasksCallback();
             String[] channelsSubscribed = ToDoAppInstance.getInstance().getPubnubInstance().getSubscribedChannelsArray();
@@ -180,11 +180,12 @@ public class PubNubHelper {
         return ;
     }
 
-    public  void getTaskDetails(final Context con,final String task_ID, final String start_Index
-                                      ) {
+    public  void getTaskDetails(final Context con,final String task_ID, final String start_Index) {
         try {
         initCallbackTaskDetails(con,
                 task_ID, start_Index);
+
+
             String[] channelsSubscribed = ToDoAppInstance.getInstance().getPubnubInstance().getSubscribedChannelsArray();
             for(String channelName :channelsSubscribed){
                 if(channelName.equalsIgnoreCase(ChannelConstants.GET_TASK_DETAILS)){
@@ -223,7 +224,7 @@ public class PubNubHelper {
 
     public void addNewComment(final String taskID, final String comment) {
         try {
-            initCallbackAddComment(taskID,comment);
+            initCallbackAddComment(taskID, comment);
 
 
             String[] channelsSubscribed = ToDoAppInstance.getInstance().getPubnubInstance().getSubscribedChannelsArray();
@@ -1031,6 +1032,15 @@ public class PubNubHelper {
         }
 
     public  void initCallbackTaskDetails( final Context context, final String task_ID, final String start_Index){
+
+        // while subscribing to the get details channel
+        // we also subscribe to updateStatus channel, so that if any status
+        // update is made for this task by other users, we can reflect that in realtime
+        // here we send a mock status =1; we just subscribe to the channnel
+        //but to do not actually publish the status change...
+        initCallbackToggleStatus();
+        initCallbackAddComment();
+
         mPbNbCallbackGetTaskDetails = new Callback() {
             @Override
             public void successCallback(String channel, Object message) {
@@ -1143,6 +1153,8 @@ public class PubNubHelper {
                         .getPubnubInstance().publish(ChannelConstants.GET_TASK_DETAILS,
                         jObject, mPbNbCallbackGetTaskDetails);
 
+
+
             }
 
             @Override
@@ -1158,6 +1170,9 @@ public class PubNubHelper {
     }
 
     private void initCallbackToggleStatus(final String taskID, final String update_state){
+
+        // reset any previous instance of status toggle callback.
+        mPbNbCallbackToggleTaskStatus=null;
 
         mPbNbCallbackToggleTaskStatus = new Callback() {
             @Override
@@ -1270,11 +1285,17 @@ public class PubNubHelper {
 
                 {
 
+                    if(!ToDoAppInstance.getInstance().getCURRENT_SELECTED_TASK_DETAILS().getDISPLAY_NAME().equalsIgnoreCase(
+                            ToDoAppInstance.getInstance().getPrefValue(ChannelConstants.PREF_KEY_USER_DISPLAY_NAME)
+                    )){
+                     return;
+                    }
+
+
                     JSONObject jObject = new JSONObject();
                     JSONObject detailsObject = new JSONObject();
                     try {
                         jObject.put("type", "request");
-
                         detailsObject.put("EMAIL", ToDoAppInstance.getInstance()
                                 .getPrefValue(ChannelConstants.PREF_KEY_USER_EMAIL));
                         int user_id=Integer.parseInt(ToDoAppInstance.getInstance()
@@ -1312,6 +1333,9 @@ public class PubNubHelper {
     }
 
     private void initCallbackAddComment( final String taskID,final String comment){
+
+        mPbNbCallbackAddComment=null;
+
         mPbNbCallbackAddComment = new Callback() {
             @Override
             public void successCallback(String channel, Object message) {
@@ -1479,5 +1503,289 @@ public class PubNubHelper {
                 super.disconnectCallback(channel, message);
             }
         };
+    }
+
+
+
+    private void initCallbackAddComment( ){
+        mPbNbCallbackAddComment = new Callback() {
+            @Override
+            public void successCallback(String channel, Object message) {
+                super.successCallback(channel, message);
+                if(message instanceof JSONArray)return;;
+                System.out.println("SUBSCRIBE : " + channel + " : "
+                        + message.getClass() + " : " + message.toString());
+                try {
+                    // Gson g = new Gson();
+                    final AddCommentResponseTemplate responseTemplate = (AddCommentResponseTemplate) g.fromJson(message.toString(),
+                            AddCommentResponseTemplate.class);
+                    if (responseTemplate.getType().equalsIgnoreCase("request"))
+                        return;
+
+
+                    if (responseTemplate.getResponse_code() == 0) {
+                        if(responseTemplate.getResult().getTaskId()
+                                .equalsIgnoreCase(ToDoAppInstance
+                                        .getInstance().getCURRENT_SELECTED_TASK_ID())){
+                            //  update the comment list..
+                            CommentTemplate commentTemplate = new CommentTemplate();
+                            commentTemplate.setCOMMENT_CREATION_DATE(responseTemplate.getResult().getComment().getPostedAt());
+                            commentTemplate.setCOMMENT_DESCRIPTION(responseTemplate.getResult().getComment().getCommentText());
+                            commentTemplate.setDISPLAY_NAME(responseTemplate.getResult().getComment().getDISPLAY_NAME());
+                            commentTemplate.setORDER("");
+                            commentTemplate.setTASK_ID(responseTemplate.getResult().getTaskId());
+                            // now update the comments list..
+
+                            ToDoAppInstance
+                                    .getInstance()
+                                    .getCURRENT_SELECTED_TASK_DETAILS()
+                                    .getComments().add(commentTemplate);
+                        }
+
+
+                        Activity a = (Activity)parentReference;
+                        a.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                HandlerResponseMessage responseMessage = new HandlerResponseMessage();
+                                responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_SUCCESS);
+                                responseMessage.setResponseMessage(responseTemplate.getResponse_message());
+                                Intent intent = new Intent(ChannelConstants.ADD_COMMENT);
+                                intent.putExtra("message", g.toJson(responseMessage).toString());
+                                LocalBroadcastManager.getInstance(parentReference).sendBroadcast(intent);
+                                // handlerInstance.requestSuccess("");
+                            }
+                        });
+                    }
+                    if (responseTemplate.getResponse_code() == 1) {
+                        if(responseTemplate.getResponse_message().equalsIgnoreCase(ChannelConstants.SESSION_EXPIRED)){
+
+                            Activity a = (Activity)parentReference;
+                            a.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    HandlerResponseMessage responseMessage = new HandlerResponseMessage();
+                                    responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_SESSION_EXPIRED);
+                                    responseMessage.setResponseMessage(responseTemplate.getResponse_message());
+                                    Intent intent = new Intent(ChannelConstants.ADD_COMMENT);
+                                    intent.putExtra("message", g.toJson(responseMessage).toString());
+                                    LocalBroadcastManager.getInstance(parentReference).sendBroadcast(intent);
+                                    // handlerInstance.requestSuccess("");
+                                }
+                            });
+                            return;
+                        }
+
+                        Activity a = (Activity)parentReference;
+                        a.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                HandlerResponseMessage responseMessage = new HandlerResponseMessage();
+                                responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_FAILURE);
+                                responseMessage.setResponseMessage(responseTemplate.getResponse_message());
+                                Intent intent = new Intent(ChannelConstants.ADD_COMMENT);
+                                intent.putExtra("message", g.toJson(responseMessage).toString());
+                                LocalBroadcastManager.getInstance(parentReference).sendBroadcast(intent);
+                            }
+                        });
+
+                    }
+                    //ToDoAppInstance.getInstance().getPubnubInstance().unsubscribe(ChannelConstants.ADD_COMMENT);
+                } catch (final Exception e) {
+
+                    Activity a = (Activity)parentReference;
+                    a.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            HandlerResponseMessage responseMessage = new HandlerResponseMessage();
+                            responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_ERROR);
+                            responseMessage.setResponseMessage(e.getMessage());
+                            Intent intent = new Intent(ChannelConstants.ADD_COMMENT);
+                            intent.putExtra("message", g.toJson(responseMessage).toString());
+                            LocalBroadcastManager.getInstance(parentReference).sendBroadcast(intent);
+                            // handlerInstance.requestSuccess("");
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void errorCallback(String channel, final PubnubError error) {
+                super.errorCallback(channel, error);
+                {
+                    System.out.println("SUBSCRIBE : ERROR on channel " + channel
+                            + " : " + error.toString());
+
+                    Activity a = (Activity)parentReference;
+                    a.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            HandlerResponseMessage responseMessage = new HandlerResponseMessage();
+                            responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_ERROR);
+                            responseMessage.setResponseMessage(error.getErrorString());
+                            Intent intent = new Intent(ChannelConstants.ADD_COMMENT);
+                            intent.putExtra("message", g.toJson(responseMessage).toString());
+                            LocalBroadcastManager.getInstance(parentReference).sendBroadcast(intent);
+                            // handlerInstance.requestSuccess("");
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void connectCallback(String channel, Object message) {
+                super.connectCallback(channel, message);
+
+            }
+
+            @Override
+            public void reconnectCallback(String channel, Object message) {
+                super.reconnectCallback(channel, message);
+            }
+
+            @Override
+            public void disconnectCallback(String channel, Object message) {
+                super.disconnectCallback(channel, message);
+            }
+        };
+
+        try{
+            ToDoAppInstance.getInstance()
+                    .getPubnubInstance()
+                    .subscribe(ChannelConstants.ADD_COMMENT,
+                            mPbNbCallbackAddComment);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    // just subscribe to the status change channel...
+    private void initCallbackToggleStatus(){
+
+
+
+            mPbNbCallbackToggleTaskStatus = new Callback() {
+                @Override
+                public void successCallback(String channel, Object message) {
+                    super.successCallback(channel, message);
+                    if(message instanceof JSONArray)return;;
+                    {
+                        System.out.println("SUBSCRIBE : " + channel + " : "
+                                + message.getClass() + " : " + message.toString());
+                        try {
+
+                            final ToggleStatusResponseTemplate responseTemplate = (ToggleStatusResponseTemplate) g.fromJson(message.toString(),
+                                    ToggleStatusResponseTemplate.class);
+                            if (responseTemplate.getType().equalsIgnoreCase("request"))
+                                return;
+                            // if the task id of response is
+                            //not same as the current task whose details are being displayed -->return
+
+                            if(!responseTemplate.getResult().getTask_id()
+                                    .equalsIgnoreCase(ToDoAppInstance
+                                            .getInstance().getCURRENT_SELECTED_TASK_ID()))return;
+                            HandlerResponseMessage responseMessage = new HandlerResponseMessage();
+                            if (responseTemplate.getResponse_code() == 0) {
+
+                                Activity a = (Activity)parentReference;
+                                a.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        HandlerResponseMessage responseMessage = new HandlerResponseMessage();
+                                        responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_SUCCESS);
+                                        responseMessage.setResponseMessage(responseTemplate.getResponse_message());
+                                        Intent intent = new Intent(ChannelConstants.UPDATE_TASK_STATUS);
+                                        intent.putExtra("message", g.toJson(responseMessage).toString());
+                                        LocalBroadcastManager.getInstance(parentReference).sendBroadcast(intent);
+                                        // handlerInstance.requestSuccess("");
+                                    }
+                                });
+
+                            }
+                            if (responseTemplate.getResponse_code() == 1) {
+                                if(responseTemplate.getResponse_message().equalsIgnoreCase(ChannelConstants.SESSION_EXPIRED)){
+
+                                    Activity a = (Activity)parentReference;
+                                    a.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            HandlerResponseMessage responseMessage = new HandlerResponseMessage();
+                                            responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_SESSION_EXPIRED);
+                                            responseMessage.setResponseMessage(responseTemplate.getResponse_message());
+                                            Intent intent = new Intent(ChannelConstants.UPDATE_TASK_STATUS);
+                                            intent.putExtra("message", g.toJson(responseMessage).toString());
+                                            LocalBroadcastManager.getInstance(parentReference).sendBroadcast(intent);
+                                            // handlerInstance.requestSuccess("");
+                                        }
+                                    });
+                                    return;
+                                }
+                                Activity a = (Activity)parentReference;
+                                a.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        HandlerResponseMessage responseMessage = new HandlerResponseMessage();
+                                        responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_FAILURE);
+                                        responseMessage.setResponseMessage(responseTemplate.getResponse_message());
+                                        Intent intent = new Intent(ChannelConstants.UPDATE_TASK_STATUS);
+                                        intent.putExtra("message", g.toJson(responseMessage).toString());
+                                        LocalBroadcastManager.getInstance(parentReference).sendBroadcast(intent);
+                                    }
+                                });
+                            }
+
+                        } catch (final Exception e) {
+
+                            Activity a = (Activity)parentReference;
+                            a.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    HandlerResponseMessage responseMessage = new HandlerResponseMessage();
+                                    responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_ERROR);
+                                    responseMessage.setResponseMessage(e.getMessage());
+                                    Intent intent = new Intent(ChannelConstants.UPDATE_TASK_STATUS);
+                                    intent.putExtra("message", g.toJson(responseMessage).toString());
+                                    LocalBroadcastManager.getInstance(parentReference).sendBroadcast(intent);
+                                    // handlerInstance.requestSuccess("");
+                                }
+                            });
+                        }
+                    }
+
+                }
+
+                @Override
+                public void errorCallback(String channel, PubnubError error) {
+                    super.errorCallback(channel, error);
+                    {
+
+                    }
+                }
+
+                @Override
+                public void connectCallback(String channel, Object message)
+                {}
+
+                @Override
+                public void reconnectCallback(String channel, Object message) {
+                    super.reconnectCallback(channel, message);
+                }
+
+                @Override
+                public void disconnectCallback(String channel, Object message) {
+                    super.disconnectCallback(channel, message);
+                }
+            };
+        try{
+            ToDoAppInstance.getInstance()
+                    .getPubnubInstance()
+                    .subscribe(ChannelConstants.UPDATE_TASK_STATUS,
+                            mPbNbCallbackToggleTaskStatus);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

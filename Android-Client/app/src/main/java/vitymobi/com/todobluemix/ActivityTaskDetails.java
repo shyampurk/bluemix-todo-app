@@ -159,6 +159,11 @@ public class ActivityTaskDetails extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         if(view==mBtnAddNewComment){
+            if(!ToDoAppInstance.getInstance().getCURRENT_SELECTED_TASK_DETAILS().getTASK_STATUS().equalsIgnoreCase("0")){
+                ToDoAppInstance.getInstance().showAlertWithMessage("Comments cannot be added to a closed task",ActivityTaskDetails.this);
+                return;
+            }
+
             if(validateInputs()){
                 new PubNubHelper(ActivityTaskDetails.this).addNewComment(
                         ToDoAppInstance.getInstance().getCURRENT_SELECTED_TASK_ID(),
@@ -277,6 +282,7 @@ public class ActivityTaskDetails extends AppCompatActivity implements View.OnCli
             }else{
                 mBtnToggleStatus.setTextColor(Color.RED);
                 mBtnToggleStatus.setText("STATUS : CLOSE");
+
             }
             if(!ToDoAppInstance.getInstance().getCURRENT_SELECTED_TASK_DETAILS().getDISPLAY_NAME().equalsIgnoreCase(
                     ToDoAppInstance.getInstance().getPrefValue(ChannelConstants.PREF_KEY_USER_DISPLAY_NAME)
