@@ -24,4 +24,6 @@ public class ChannelConstants {
     public static final String PREF_KEY_USER_DISPLAY_NAME ="USER_DISPLAY_NAME";
     public static final String LOGED_IN_ALREADY="Logged in already with the given credentials";
     public static final String SESSION_EXPIRED="session Expired";
+    public static final String IS_LOGGED_IN="is_logged_in";
+
 }

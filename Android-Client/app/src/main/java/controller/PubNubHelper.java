@@ -508,6 +508,8 @@ public class PubNubHelper {
                     {if(message instanceof JSONArray)return;;
                         System.out.println("SUBSCRIBE : " + channel + " : "
                                 + message.getClass() + " : " + message.toString());
+
+                        if(ToDoAppInstance.getInstance().getPrefValue(ChannelConstants.IS_LOGGED_IN).equalsIgnoreCase("YES"))return;
                         try {
                             Gson g = new Gson();
                             final LoginResponseTemplate responseTemplate = (LoginResponseTemplate) g.fromJson(message.toString(),
@@ -521,7 +523,7 @@ public class PubNubHelper {
                                 HandlerResponseMessage responseMessage = new HandlerResponseMessage();
                                 responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_SUCCESS);
                                 responseMessage.setResponseMessage(responseTemplate.getResponse_message());
-
+                                ToDoAppInstance.getInstance().saveInPrefs(ChannelConstants.IS_LOGGED_IN,"YES");
                                 Message mm = handlerInstance.obtainMessage(ChannelConstants.HANDLER_CODE_SUCCESS,
                                         responseMessage);
                                 mm.sendToTarget();
@@ -533,7 +535,7 @@ public class PubNubHelper {
                                     ToDoAppInstance.getInstance().saveInPrefs(ChannelConstants.PREF_KEY_USER_EMAIL, responseTemplate.getDetails().getEMAIL());
                                     ToDoAppInstance.getInstance().saveInPrefs(ChannelConstants.PREF_KEY_USER_DISPLAY_NAME, responseTemplate.getDetails().getDISPLAY_NAME());
 
-                                    responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_SUCCESS);
+                                    responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_FAILURE);
                                     responseMessage.setResponseMessage(responseTemplate.getResponse_message());
 
                                     Message mm = handlerInstance.obtainMessage(ChannelConstants.HANDLER_CODE_SUCCESS,
@@ -559,7 +561,7 @@ public class PubNubHelper {
 
                                 mm.sendToTarget();
                             }
-                            ToDoAppInstance.getInstance().getPubnubInstance().unsubscribe(ChannelConstants.LOGIN);
+                           // ToDoAppInstance.getInstance().getPubnubInstance().unsubscribe(ChannelConstants.LOGIN);
                         } catch (Exception e) {
                             HandlerResponseMessage responseMessage = new HandlerResponseMessage();
                             responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_SUCCESS);
@@ -635,6 +637,7 @@ public class PubNubHelper {
                     HandlerResponseMessage responseMessage = new HandlerResponseMessage();
 
                     if (responseTemplate.getResponse_code() == 0) {
+                        ToDoAppInstance.getInstance().saveInPrefs(ChannelConstants.IS_LOGGED_IN,"NO");
                         responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_SUCCESS);
                         responseMessage.setResponseMessage(responseTemplate.getResponse_message());
                         Message mm = handlerInstance.obtainMessage(ChannelConstants.HANDLER_CODE_SUCCESS,
@@ -656,7 +659,7 @@ public class PubNubHelper {
                                 responseMessage);
                         mm.sendToTarget();
                     }
-                    ToDoAppInstance.getInstance().getPubnubInstance().unsubscribe(ChannelConstants.LOGOUT);
+                   // ToDoAppInstance.getInstance().getPubnubInstance().unsubscribe(ChannelConstants.LOGOUT);
                 } catch (Exception e) {
                     HandlerResponseMessage responseMessage = new HandlerResponseMessage();
                     responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_ERROR);
