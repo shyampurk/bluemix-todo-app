@@ -27,6 +27,7 @@ import modals.HandlerResponseMessage;
 import modals.LoginResponseTemplate;
 import modals.TaskDetailsReponse;
 import modals.TaskListResponse;
+import modals.ToggleStatusResponseTemplate;
 
 /**
  * Created by manishautomatic on 16/05/16.
@@ -1086,7 +1087,7 @@ public class PubNubHelper {
                              //       responseMessage);
                             //mm.sendToTarget();
                         }
-                        //ToDoAppInstance.getInstance().getPubnubInstance().unsubscribe(ChannelConstants.GET_TASK_DETAILS);
+                        ToDoAppInstance.getInstance().getPubnubInstance().unsubscribe(ChannelConstants.GET_TASK_DETAILS);
                     } catch (Exception e) {
                         HandlerResponseMessage responseMessage = new HandlerResponseMessage();
                         responseMessage.setResponseCode(ChannelConstants.HANDLER_CODE_ERROR);
@@ -1168,11 +1169,16 @@ public class PubNubHelper {
                             + message.getClass() + " : " + message.toString());
                     try {
 
-                        final LoginResponseTemplate responseTemplate = (LoginResponseTemplate) g.fromJson(message.toString(),
-                                LoginResponseTemplate.class);
+                        final ToggleStatusResponseTemplate responseTemplate = (ToggleStatusResponseTemplate) g.fromJson(message.toString(),
+                                ToggleStatusResponseTemplate.class);
                         if (responseTemplate.getType().equalsIgnoreCase("request"))
                             return;
+                        // if the task id of response is
+                        //not same as the current task whose details are being displayed -->return
 
+                        if(!responseTemplate.getResult().getTask_id()
+                                .equalsIgnoreCase(ToDoAppInstance
+                                        .getInstance().getCURRENT_SELECTED_TASK_ID()))return;
                         HandlerResponseMessage responseMessage = new HandlerResponseMessage();
                         if (responseTemplate.getResponse_code() == 0) {
 
@@ -1271,8 +1277,11 @@ public class PubNubHelper {
 
                         detailsObject.put("EMAIL", ToDoAppInstance.getInstance()
                                 .getPrefValue(ChannelConstants.PREF_KEY_USER_EMAIL));
-                        detailsObject.put("USER_ID", ToDoAppInstance.getInstance()
+                        int user_id=Integer.parseInt(ToDoAppInstance.getInstance()
                                 .getPrefValue(ChannelConstants.PREF_KEY_USER_ID));
+                        detailsObject.put("USER_ID", user_id);
+
+                        
                         detailsObject.put("DISPLAY_NAME", ToDoAppInstance.getInstance()
                                 .getPrefValue(ChannelConstants.PREF_KEY_USER_DISPLAY_NAME));
                         jObject.put("details", detailsObject);

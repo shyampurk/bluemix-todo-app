@@ -10,7 +10,16 @@ public class LoginResponseTemplate {
     private String result ="";
     private String response_message ="";
     private LoginDetailsObject details = new LoginDetailsObject();
+    private int task_id=-1;
 
+
+    public int getTask_id() {
+        return task_id;
+    }
+
+    public void setTask_id(int task_id) {
+        this.task_id = task_id;
+    }
 
     public int getResponse_code() {
         return response_code;
