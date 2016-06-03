@@ -81,36 +81,22 @@ Step 7: If the Run command executed successfully , you will be able to see the n
 
 
 
-Step 1 - Update the parameters in the code 
+Step 1 - Update the parameters in the server [code](server/server.py) 
 
-	pub_key = PubNub Publish Key
-	sub_key = PubNub Subscribe Key
-	db_schema = User ID of the DashDB instance , in caps
-	db_name = Database name
-	db_host = Host Name
-	table_name = Table name is set to KITCHENTRACKERAPP
-	username = User ID of the DashDB instance
-	pwd = Password of dashDB instance
-	port = Port Number
-	expiry = 0 ( Leave it to default value of zero)
+	Line 14 - In the databaseConnectionInfo dictionary , replace all the existing values with their respective values of your dashDB instance as displayed in dashDB Connection Information page.
+	Line 15 - Change the value of DatabaseSchema with your dashDB User id ( in all caps)
+	Line 19 - Specify yout PubNub Publish Key
+	Line 20 - Specify yout PubNub Subscribe Key
 	
 
-Step 2 - Open the [manifest file](https://github.com/shyampurk/kitchen-tracker/blob/master/kitchen_tracker/manifest.yml) and update the follwing entries
+Step 2 - Open the [manifest file](https://github.com/shyampurk/bluemix-todo-app/blob/master/server/manifest.yml) and update the follwing entries
 
-		applicationa:
-			- name : <name of the application on server>
-	
-		services
-			- <dashdb instance name>
-
-		where 
-			<name of the application on server> - Any desired name for the application
-			<dashdb instance name> - name of the dashdb service instance that you have created in the previous section.
+	Line 12 - Change 'bluemixtodoapp' to the actual dashDB service name you have given while creating the dashDB service instance ( Step 3 in 'Setting up dashDB Database').
 
 
 Step 3 - Login to Bluemix console via cf tool and select the space.
 
-Step 4 - Change directory to the server application root (kitchen_tracker) under the cloned github repository.
+Step 4 - Change directory to the server application root (server) under the cloned github repository.
 
 Step 5 - Run the following command to push the application code to bluemix
 
