@@ -68,6 +68,10 @@ Step 6: In the Side Main Menu, click on "Run SQL"  and you will be presented the
 Step 7: If the Run command executed successfully , you will be able to see the new tables created under your dashDB instance
 		- Click on "Tables" sub menu
 		- Select the table from "Table Name" dropdown to access the table schema and data
+		- You can find three tables listed under the dropdown
+		- 	USERTABLE
+		- 	TASKTABLE
+		- 	COMMENTTABLE
 
 
 
