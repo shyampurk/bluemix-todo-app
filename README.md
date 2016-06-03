@@ -18,6 +18,8 @@ the app's server side logic. Its a ToDo app for keeping track of project tasks. 
 
 ## Deployment Steps
 
+Before starting the deployment process, clone this github repository.
+
 ### Prerequisite
 
       - You should have a valid IBM account
@@ -51,25 +53,31 @@ Step 5: In the dashDB service home page, under the Side Menu, under the Connect 
 
         Make a note of Host Name, Port Number , Database Name, User ID and Password.
 
-Step 6: In the Side Main Menu, click Tables,Here you can create the table for this application.
+Step 6: In the Side Main Menu, click on "Run SQL"  and you will be presented the Run SQL screen.
 		
-		Copy and paste the the SQL Table commands from SQL file 
+		- Click on the 'Open' button and choose the SQL [schema file](server/dBdata.sql)
+		- The SQL commands will be displayed in the text area.
+		- Scroll down the test area untill you see the comment
+			-- COMMANDS TO INSERT THE DATA INTO THE USERTABLE
+			
+		  Followed by four INSERT commands
+		- For every INSERT command, replace the last four 'X' character of DASHXXXX to your DashDB User ID shown in the previous step under 'Connection Information'. ( For example , of your user ID is dash7768 , then it will be DASH7768) 
+		- Click on the 'Validate' button to ensure that SQLsyntax is valid
+		- Click on the 'Run' button to execute the SQL statements.
+
+Step 7: If the Run command executed successfully , you will be able to see the new tables created under your dashDB instance
+		- Click on "Tables" sub menu
+		- Select the table from "Table Name" dropdown to access the table schema and data
 
 
-Step 7: Then click the button "Run DDL".
-		You can see the newly created table by selecting your schema and table name. Your schema is same as your username as displayed in Connect > Connection Information menu.
-
-Step 8: Repeat step 6 and 7 for all tables defined in SQL file.
-
-Step 9: Create the predefined User accounts 
 
 
 
 ### Hosting the Application Server on Bluemix
 
-Step 1 - Clone this github repository
 
-Step 2 - Update the parameters in the code 
+
+Step 1 - Update the parameters in the code 
 
 	pub_key = PubNub Publish Key
 	sub_key = PubNub Subscribe Key
@@ -83,7 +91,7 @@ Step 2 - Update the parameters in the code
 	expiry = 0 ( Leave it to default value of zero)
 	
 
-Step 3 - Open the [manifest file](https://github.com/shyampurk/kitchen-tracker/blob/master/kitchen_tracker/manifest.yml) and update the follwing entries
+Step 2 - Open the [manifest file](https://github.com/shyampurk/kitchen-tracker/blob/master/kitchen_tracker/manifest.yml) and update the follwing entries
 
 		applicationa:
 			- name : <name of the application on server>
@@ -96,11 +104,11 @@ Step 3 - Open the [manifest file](https://github.com/shyampurk/kitchen-tracker/b
 			<dashdb instance name> - name of the dashdb service instance that you have created in the previous section.
 
 
-Step 4 - Login to Bluemix console via cf tool and select the space.
+Step 3 - Login to Bluemix console via cf tool and select the space.
 
-Step 5 - Change directory to the server application root (kitchen_tracker) under the cloned github repository.
+Step 4 - Change directory to the server application root (kitchen_tracker) under the cloned github repository.
 
-Step 6 - Run the following command to push the application code to bluemix
+Step 5 - Run the following command to push the application code to bluemix
 
 		'cf push' 
 
