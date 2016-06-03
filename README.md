@@ -61,7 +61,7 @@ Step 6: In the Side Main Menu, click on "Run SQL"  and you will be presented the
 			-- COMMANDS TO INSERT THE DATA INTO THE USERTABLE
 			
 		  Followed by four INSERT commands
-		- For every INSERT command, replace the last four 'X' character of DASHXXXX to your DashDB User ID shown in the previous step under 'Connection Information'. ( For example , of your user ID is dash7768 , then it will be DASH7768) 
+		- For every INSERT command, replace the last four 'x' character of DASHxxxx with your DashDB User ID (numeric part) shown in the previous step under 'Connection Information'. ( For example , if your user ID is dash7768 , then it will be DASH7768) 
 		- Click on the 'Validate' button to ensure that SQLsyntax is valid
 		- Click on the 'Run' button to execute the SQL statements.
 
