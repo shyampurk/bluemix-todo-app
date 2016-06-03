@@ -39,7 +39,7 @@ Step 2: In your dashboard, goto Catalog and select the Data and Analytics Sectio
 Step 3: Click on dashDB service icon and create a dashDB service instance for your space by filling following details,
 		
 			1) Space - Your space name where you want to add this service ( This might have been preselected if you have an existing space)
-    	2) App   - You can select "leave unbound"
+    			2) App   - You can select "leave unbound"
 			3) Service name - Enter a name for the service of your choice
 			4) Credential name - Enter a name for the Credential of your choice
 			5) Selected Plan - Choose 'Entry'.
@@ -53,19 +53,20 @@ Step 5: In the dashDB service home page, under the Side Menu, under the Connect 
 
         Make a note of Host Name, Port Number , Database Name, User ID and Password.
 
-Step 6: In the Side Main Menu, click on "Run SQL"  and you will be presented the Run SQL screen.
-		
-		- Click on the 'Open' button and choose the SQL [schema file](server/dBdata.sql)
+Step 6: In the Side Main Menu, click on "Run SQL"  and you will be presented the Run SQL screen. Click on the 'Open' button and choose the SQL [schema file](server/dBdata.sql)
+
 		- The SQL commands will be displayed in the text area.
-		- Scroll down the test area untill you see the comment
+		- Scroll down the text area untill you see the comment
+		
 			-- COMMANDS TO INSERT THE DATA INTO THE USERTABLE
 			
-		  Followed by four INSERT commands
+		  	Followed by four INSERT commands
 		- For every INSERT command, replace the last four 'x' character of DASHxxxx with your DashDB User ID (numeric part) shown in the previous step under 'Connection Information'. ( For example , if your user ID is dash7768 , then it will be DASH7768) 
-		- Click on the 'Validate' button to ensure that SQLsyntax is valid
+		- Click on the 'Validate' button to ensure that SQL syntax is valid
 		- Click on the 'Run' button to execute the SQL statements.
 
 Step 7: If the Run command executed successfully , you will be able to see the new tables created under your dashDB instance
+		
 		- Click on "Tables" sub menu
 		- Select the table from "Table Name" dropdown to access the table schema and data
 		- You can find three tables listed under the dropdown
@@ -81,7 +82,7 @@ Step 7: If the Run command executed successfully , you will be able to see the n
 
 
 
-Step 1 - Update the parameters in the server [code](server/server.py) 
+Step 1 - Update the parameters in the server [python code](server/server.py) 
 
 	Line 14 - In the databaseConnectionInfo dictionary , replace all the existing values with their respective values of your dashDB instance as displayed in dashDB Connection Information page.
 	Line 15 - Change the value of DatabaseSchema with your dashDB User id ( in all caps)
