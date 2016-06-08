@@ -112,6 +112,10 @@ Follow the standard build procedures for building the APK package for this andro
 
 Before building , ensure that you select the PubNub keys as follows and ensure that the keys used in the app are same as the ones used in server.
 
+1. Set the PubNub Subscribe Key at Line 20 in [ToDoAppInstance.java](https://github.com/shyampurk/bluemix-todo-app/blob/master/Android-Client/src/main/java/controller/ToDoAppInstance.java)
+
+2. Set the PubNub Publish Key at Line 21 in [ToDoAppInstance.java](https://github.com/shyampurk/bluemix-todo-app/blob/master/Android-Client/src/main/java/controller/ToDoAppInstance.java)
+
 
 ## Usage
 
