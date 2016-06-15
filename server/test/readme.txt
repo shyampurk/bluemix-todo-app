@@ -1,5 +1,6 @@
-NOTE:
-	1)client.py is to test the functionality of the app
+NOTE: These scripts are only for testing purpose. They are not part of the mail application.
+	1)client.py - This program is used to test the functionality of the server without the client app. THis script can simulate all requests sent from teh client to server.
+	
 	Instructions:Select any of these tasks by their number
 			 0)logOut 
 			 1)getAddressBook 
@@ -24,6 +25,6 @@ NOTE:
 		6)getTaskDetails --> select 6 to get the specific task, you will be asked to enter the 
 				task_id and the start_index enter those to get the details
 
-	2)reset.py Program will help you when your session expired and you couldnt login to that particular client or when you terminate the client program without logging out(only for testing purpose).
+	2)reset.py This Program will help you when one of the login session has expired and the user is not able to login using that login credential from another app. This script will terminate the dormain login session which could have been left idle either by the app or in the client.py script.
 
 	
