@@ -89,7 +89,9 @@ Step 1 - Update the parameters in the server [python code](server/server.py)
 	Line 19 - Specify yout PubNub Publish Key
 	Line 20 - Specify yout PubNub Subscribe Key
 	
-	If you intend to use the test scripts ( under the test subfolder within server) then the above changes need to be done in client.py and reset.py also. Look out for the same database and PubNub settings in these files. 
+
+Step 1.a (optional) - If you intend to use the test scripts ( under the test subfolder within server) 
+        then the above parameter changes need to be done in [client.py](server/test/client.py) and [reset.py](server/test/reset.py) also. Look out for the same database and PubNub settings in these files. Refer this [readme](server/test/readme.txt) file for usage description of these scripts. 
 
 
 Step 2 - Open the [manifest file](https://github.com/shyampurk/bluemix-todo-app/blob/master/server/manifest.yml) and update the follwing entries
@@ -158,4 +160,8 @@ Finally the user can log out of the app by tapping on the "LOGOUT" button under 
 
 <img src="/screenshots/flow-6.png" align="center" width="250" >
 
+##Limitations
 
+1. This application enforces a idle timeout check of 30 mins on every logged in session to force automatic session expiration but there is no visual indication of this on the App.
+2. After session expiry, the App will not automatically log out until the user tries to perform a operation to force the App to log out.   
+2. During that time ( between session expiry and forced log out), a user cannot login from another app instance using the same login credentials. This can be overridden by using the reset.py script as mentioned in Step  1.a under "Hosting the Application Server on Bluemix" section above.
